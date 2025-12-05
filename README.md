@@ -219,21 +219,6 @@ npx tsc --noEmit
 # フォーマット
 npx prettier --write .
 ```
-
-## 📚 参考資料
-
-### Passport.js
-
-- [公式ドキュメント](https://www.passportjs.org/packages/passport-local/)
-- [参考ブログ](https://torikasyu.com/?p=2171)
-
-### Prisma
-
-- [モデル定義](https://www.prisma.io/docs/orm/prisma-schema/data-model/models)
-- [設定リファレンス](https://www.prisma.io/docs/orm/reference/prisma-config-reference)
-- [マイグレーション](https://www.prisma.io/docs/orm/prisma-migrate/getting-started)
-- [PostgreSQL](https://www.prisma.io/docs/orm/overview/databases/postgresql)
-
 ## 📝 ライセンス
 
 ISC
