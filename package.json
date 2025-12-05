@@ -1,0 +1,49 @@
+{
+  "name": "@s24023/njs-book-manager",
+  "version": "1.0.0",
+  "description": "A comprehensive book management system built with Node.js, Express, and Prisma",
+  "main": "src/bookManager.app.ts",
+  "type": "module",
+  "scripts": {
+    "dev:app": "tsx --env-file=.env --watch=./src/* ./src/bookManager.app.ts",
+    "docker": "docker compose -f ./bookManagerDocker/compose.yaml up -d",
+    "docker:down": "docker compose -f ./bookManagerDocker/compose.yaml down",
+    "dev": "npm run docker && npm run dev:app"
+  },
+  "keywords": [
+    "book-management",
+    "library",
+    "nodejs",
+    "express",
+    "prisma",
+    "postgresql",
+    "typescript"
+  ],
+  "author": "s24023",
+  "license": "ISC",
+  "packageManager": "pnpm@10.12.4",
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.0.0",
+    "@prisma/client": "^6.19.0",
+    "@types/passport-local": "^1.0.38",
+    "argon2": "^0.44.0",
+    "connect-redis": "^9.0.0",
+    "cookie-parser": "^1.4.7",
+    "db": "link:src/generated/prisma",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "express-validator": "^7.3.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "redis": "^5.10.0"
+  },
+  "devDependencies": {
+    "@tsconfig/node24": "^24.0.3",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/express": "^5.0.5",
+    "@types/express-session": "^1.18.2",
+    "@types/passport": "^1.0.17",
+    "prisma": "^6.19.0",
+    "typescript": "^5.9.3"
+  }
+}

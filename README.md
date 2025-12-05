@@ -1,4 +1,4 @@
-# 📚 NJS Book Manager
+# 📚 Bookmanager_2025
 
 Node.js + Express + Prisma で構築された書籍管理システム
 

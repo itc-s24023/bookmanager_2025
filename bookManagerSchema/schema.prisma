@@ -1,0 +1,95 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model Author {
+  @@map("author")
+
+  id        String    @id @default(uuid(7)) @db.VarChar(36)
+  name      String    @db.VarChar(128)
+  isDeleted Boolean   @default(false) @map("is_deleted")
+
+  @@index([name])
+
+  books     Book[]
+
+}
+
+model Publisher {
+  @@map("publisher")
+  
+  id        String    @id @default(uuid(7)) @db.VarChar(36)
+  name      String    @unique @db.VarChar(128)
+  isDeleted Boolean   @default(false) @map("is_deleted")
+  
+  @@index([name])
+
+  books     Book[]
+
+}
+
+model User {
+  @@map("user")
+
+  id        String       @id @default(uuid(7)) @db.VarChar(36)
+  email     String       @unique @db.VarChar(254)
+  name      String       @db.VarChar(512)
+  password  String       @db.VarChar(256)
+  isAdmin   Boolean      @default(false) @map("is_admin")
+  createdAt DateTime     @default(now()) @map("created_at")
+  updatedAt DateTime     @default(now()) @updatedAt @map("updated_at")
+  isDeleted Boolean      @default(false) @map("is_deleted")
+
+
+  rentalLogs RentalLog[]
+  
+}
+
+model Book {
+  @@map("book")
+
+  isbn              BigInt     @id
+  title             String     @db.VarChar(512)
+  authorId          String     @db.VarChar(36) @map("author_id")
+  publisherId       String     @db.VarChar(36) @map("publisher_id")
+  //postgresqlでは使用できな型なので代用
+  publicationYear   Int        @db.Integer @map("publication_year")
+  publicationMonth  Int        @db.SmallInt @map("publication_month")
+
+  isDeleted         Boolean    @default(false) @map("is_deleted")
+  
+  
+  author            Author     @relation(fields: [authorId], references: [id])
+  publisher         Publisher  @relation(fields: [publisherId], references: [id])
+  rentalLogs        RentalLog[]
+
+}
+
+model RentalLog {
+  @@map("rental_log")
+  
+  id            String    @id @default(uuid(7)) @db.VarChar(36)
+  bookIsbn      BigInt    @map("book_isbn")
+  userId        String    @db.VarChar(36) @map("user_id")
+  checkoutDate  DateTime  @map("checkout_date")
+  dueDate       DateTime  @map("due_date")
+  returnedDate  DateTime? @map("returned_date")
+  
+  book          Book      @relation(fields: [bookIsbn], references: [isbn])
+  user          User      @relation(fields: [userId], references: [id])
+
+}
+

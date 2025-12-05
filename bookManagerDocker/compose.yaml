@@ -1,0 +1,35 @@
+services:
+  db:
+    container_name: s24023_book_manager_db
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - type: bind
+        source: "./init"
+        target: "/docker-entrypoint-initdb.d"
+      - type: volume
+        source: "postgres-data"
+        target: "/var/lib/postgresql/s24023_book_manager_data"
+
+  adminer:
+    container_name: s24023_book_manager_adminer
+    image: adminer
+    ports:
+      - "8023:8080"
+
+  session:
+    container_name: s24023_book_manager_session
+    image: valkey/valkey
+    ports:
+      - "6379:6379"
+    volumes:
+      - type: volume
+        source: session-data
+        target: /data
+
+volumes:
+  postgres-data:
+  session-data:
